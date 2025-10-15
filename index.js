@@ -1,3 +1,5 @@
+// index.js (Sunucu)
+
 // Gerekli Kütüphaneleri Dahil Etme
 const express = require('express');
 const app = express();
@@ -8,7 +10,7 @@ const { Server } = require("socket.io");
 // Socket.IO'yu kuruyoruz. CORS ile farklı domainlerden erişimi açıyoruz.
 const io = new Server(server, {
   cors: {
-    origin: "*", // Tüm domainlerden gelen bağlantılara izin ver
+    origin: "*", 
     methods: ["GET", "POST"]
   }
 });
@@ -19,7 +21,6 @@ const io = new Server(server, {
 
 // Uygulamanın anasayfasına (/) gelen isteklere 'index.html' dosyasını gönder.
 app.get('/', (req, res) => {
-  // index.html dosyasını hemen sonraki adımda oluşturacağız.
   res.sendFile(__dirname + '/index.html');
 });
 
@@ -29,7 +30,7 @@ app.get('/', (req, res) => {
 
 // Bir kullanıcı sunucuya bağlandığında çalışır
 io.on('connection', (socket) => {
-  console.log('Yeni bir kullanıcı bağlandı'); // Sunucu Terminalinde görünür
+  console.log('Yeni bir kullanıcı bağlandı'); 
 
   // Kullanıcı bağlantıyı kestiğinde çalışır
   socket.on('disconnect', () => {
@@ -38,7 +39,7 @@ io.on('connection', (socket) => {
 
   // 'chat message' adında bir olay (event) geldiğinde çalışır
   socket.on('chat message', (msg) => {
-    console.log('Mesaj: ' + msg); // Sunucu Terminalinde görünür
+    console.log('Mesaj: ' + msg); 
     
     // Mesajı, kendisi dahil, bağlı olan herkese geri gönder
     io.emit('chat message', msg);
@@ -53,3 +54,4 @@ const PORT = 3000;
 server.listen(PORT, () => {
   console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor`);
 });
+

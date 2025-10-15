@@ -25,18 +25,15 @@
   <script src="/socket.io/socket.io.js"></script>
 
   <script>
-    // Sunucuya bağlan
     var socket = io();
-
     var form = document.getElementById('form');
     var input = document.getElementById('input');
     var messages = document.getElementById('messages');
 
     // FORM GÖNDERME İŞLEMİ
     form.addEventListener('submit', function(e) {
-      e.preventDefault();
+      e.preventDefault(); 
       if (input.value) {
-        // Sunucuya "chat message" olayıyla mesajı gönder
         socket.emit('chat message', input.value);
         input.value = '';
       }
